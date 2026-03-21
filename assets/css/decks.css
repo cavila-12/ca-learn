@@ -1,0 +1,23 @@
+﻿/* Decks page layout tweaks */
+
+.deckeditlayout{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+@media (min-width: 900px){
+  .deckeditlayout{ grid-template-columns: minmax(380px, 1fr) 1.1fr; }
+}
+
+.cardform{ display:flex; flex-direction:column; gap: 10px; }
+
+.csvimport{
+  padding: 12px;
+  border-radius: var(--radius2);
+  border: 1px dashed var(--line);
+  background: var(--surface2);
+}
+
+.csvimport__toolbar{ margin-top: 10px; margin-bottom: 0; }

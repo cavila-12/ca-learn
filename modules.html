@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f8" id="themeColorMeta" />
+    <title>CELE Reviewer • Modules</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body data-page="modules">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="iconbtn" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+        <div class="brand">
+          <div class="brand__name">CELE Reviewer</div>
+          <div class="brand__tag" id="statusTag">Modules</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button class="pill" id="installBtn" hidden>Install</button>
+      </div>
+    </header>
+
+    <nav class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__header">
+        <div class="drawer__title">Menu</div>
+        <button class="iconbtn" id="closeDrawerBtn" aria-label="Close menu">✕</button>
+      </div>
+      <div class="drawer__items">
+        <a class="navitem" href="./index.html">Home</a>
+        <a class="navitem" href="./quiz.html">Quiz</a>
+        <a class="navitem" href="./decks.html">Decks</a>
+        <a class="navitem" href="./modules.html" aria-current="page">Modules</a>
+        <a class="navitem" href="./settings.html">Settings</a>
+      </div>
+    </nav>
+    <div class="backdrop" id="backdrop" hidden></div>
+
+    <main class="container">
+      <!-- Modules -> List -->
+      <section id="modulesListView">
+        <div class="pagehead">
+          <h2>Modules</h2>
+          <div class="pagehead__right">
+            <button class="secondary" id="modulesRefreshBtn">Refresh</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Available modules</h3>
+          <div id="moduleList" class="modulelist"></div>
+        </div>
+      </section>
+
+      <!-- Modules -> Module -->
+      <section id="moduleView" hidden style="margin-top:12px">
+        <div class="pagehead">
+          <div>
+            <h2 id="moduleTitle">Module</h2>
+            <div class="muted small">Markdown-based lesson (supports formulas).</div>
+          </div>
+          <div class="pagehead__right">
+            <button class="ghost" id="backToModulesBtn">Back to list</button>
+          </div>
+        </div>
+        <div class="card">
+          <article id="moduleContent" class="modulecontent muted">Loading...</article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">Add markdown files to <code>modules/</code> and list them in <code>modules/index.json</code>.</div>
+    </footer>
+
+    <template id="toastTpl">
+      <div class="toast" role="status" aria-live="polite"></div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

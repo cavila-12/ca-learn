@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f8" id="themeColorMeta" />
+    <title>CELE Reviewer • Quiz</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body data-page="quiz">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="iconbtn" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+        <div class="brand">
+          <div class="brand__name">CELE Reviewer</div>
+          <div class="brand__tag" id="statusTag">Quiz</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button class="pill" id="installBtn" hidden>Install</button>
+      </div>
+    </header>
+
+    <nav class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__header">
+        <div class="drawer__title">Menu</div>
+        <button class="iconbtn" id="closeDrawerBtn" aria-label="Close menu">✕</button>
+      </div>
+      <div class="drawer__items">
+        <a class="navitem" href="./index.html">Home</a>
+        <a class="navitem" href="./quiz.html" aria-current="page">Quiz</a>
+        <a class="navitem" href="./decks.html">Decks</a>
+        <a class="navitem" href="./modules.html">Modules</a>
+        <a class="navitem" href="./settings.html">Settings</a>
+      </div>
+    </nav>
+    <div class="backdrop" id="backdrop" hidden></div>
+
+    <main class="container">
+      <section class="pagehead">
+        <h2>Quiz</h2>
+      </section>
+
+      <!-- Step 1: pick a deck -->
+      <section class="card" id="quizPickView">
+        <h3>Pick a deck</h3>
+        <div class="muted small">Choose a deck to start reviewing.</div>
+        <div class="decklist" id="quizDeckList" style="margin-top:12px"></div>
+        <div class="navrow" style="margin-top:12px">
+          <a class="secondary" href="./decks.html">Manage decks</a>
+          <a class="ghost" href="./index.html">Back</a>
+        </div>
+      </section>
+
+      <!-- Step 2: quiz runner -->
+      <section id="quizRunView" hidden>
+        <div class="pagehead">
+          <div>
+            <h2 id="quizDeckTitle">Deck</h2>
+            <div class="muted small" id="quizDeckMeta"></div>
+          </div>
+          <div class="pagehead__right">
+            <div class="stat">
+              <div class="stat__label">Progress</div>
+              <div class="stat__value" id="quizProgress">0/0</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Score</div>
+              <div class="stat__value" id="quizScore">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="field">
+            <span>Filter</span>
+            <select id="quizFilterSelect">
+              <option value="ALL">All types</option>
+              <option value="MCQ">MCQ only</option>
+              <option value="FLASHCARD">Flashcards only</option>
+              <option value="FORMULA">Formulas only</option>
+            </select>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="quizShuffle" />
+            <span>Shuffle</span>
+          </label>
+          <button class="secondary" id="quizRestartBtn">Restart</button>
+          <button class="ghost" id="quizBackBtn">Change deck</button>
+        </div>
+
+        <div id="quizStage" class="stage"></div>
+        <div class="navrow">
+          <button class="secondary" id="prevBtn">Previous</button>
+          <button class="primary" id="flipBtn" hidden>Flip</button>
+          <button class="primary" id="nextBtn">Next</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">Tip: first online load caches everything for offline use.</div>
+    </footer>
+
+    <template id="toastTpl">
+      <div class="toast" role="status" aria-live="polite"></div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+Type,Question,Choice1,Choice2,Choice3,Choice4,Answer,OptionalDefs
+MCQ,"A mass hangs on two parallel springs. The individual spring stiffness are K1 and K2 What is the total composite spring constant ?",(K1 K2) / (K1 +K2),K1 + K2,1/K1 + 1/K2,K1 K2,1
+MCQ, Determine the spring constant for the system of springs in series,(K1 K2) / (K1 +K2),K1 + K2,1/K1 + 1/K2,K1 K2,0
+MCQ, Identify the state of stress in a material described as follows: Stress at Failure,Proportional Limit,Ultimate Strength,Yield Strength,Rupture Strength,3
+MCQ,Highest Ordinate in Stress-Strain diagram,Proportional Limit,Ultimate Strength,Yield Strength,Rupture Strength,1
+MCQ,An Appreciable elongation or yielding of the material without any corresponding increase of load.,Proportional Limit,Ultimate Strength,Yield Strength,Rupture Strength,2
+MCQ,What do you call the retarding force acting opposite a body in motion,Inertia,Static Friction,Dynamic,Kinetic Friction,3
+MCQ,It is the displacement of one level relative to the level above or below,Fatigue,Torsional Shear Stress,Story Drift,Creep,2
+MCQ,Occurs when the center of mass and rigidity do not coincide.,Fatigue,Torsional Shear Stress,Story Drift,Creep,1
+MCQ,If the structure is subjected to a cycle of stresses�,Fatigue,Torsional Shear Stress,Story Drift,Creep,0
+MCQ,It is measured by the Richter scale.,Ground Acceleration,Magnitude of Earthquake,Resonance,Attenuation,1
+MCQ,It is measured by a Seismometer.,Reference Points,Intensity of observed effects,Components of ground motion,Actual Displacement,3
+MCQ,"Besides the epicenter, it describes the location of the earthquake.",Geologic Formation,Focal Depth,Fault Line,Dip Angle,1
+MCQ,Composite material exhibits elastic properties in one direction different from that in the perpendicular direction.,Isotropic,Prismatic,Homogeneous,Orthotropic,3
+MCQ,Material has the same composition at every point but elastic may not be the same in all directions.,Homogeneous,Isotropic,Prismatic,Orthotropic,0
+MCQ,Liquefaction is best described as�,A sudden drop in the shear strength of a soil,A decrease in pore water pressure,An increase in bearing capacity,An increase in effective stress,0
+MCQ,Which refers to the rigidity of a structure?,Deflection,Reciprocal of Deflection,Product of Stiffness and Deflection,Reciprocal of Stiffness,1
+MCQ,Point through which the resultant of resistance to applied lateral force acts.,Center of Mass,Center of Gravity,Center of Rigidity,In?Plane Offset,2
+MCQ,Point through which the applied seismic force acts.,Center of Mass,Center of Gravity,Center of Rigidity,Out?Plane Offset,0
+MCQ,Refers to flexibility of a structure.,Reciprocal of Stiffness,Reciprocal of Deflection,Reciprocal of Rigidity,Static Deflection,0
+MCQ,One in which lateral stiffness is less than 70% of the story above.,Story Displacement,Soft Story,Lateral Drift,Story Drift,1
+MCQ,Lateral displacement of one level relative to the level above or below.,Story Displacement,Soft Story,Lateral Drift,Story Drift,3
+MCQ,Point through which resultant of resistance to applied force acts.,Shear Wall,Center of Mass,Eccentricity,Center of Rigidity,3
+MCQ,Distance between center of rigidity and center of mass.,Deflection,Drift,Pitch,Eccentricity,3
+MCQ,Ability to absorb energy in plastic range.,Resilience,Toughness,Brittleness,Stiffness,1
+MCQ,Ability to absorb energy in elastic range.,Toughness,Stiffness,Ductility,Resilience,3
+MCQ,Ability to deform in plastic range without breaking.,Toughness,Stiffness,Ductility,Resilience,2
+MCQ,Measured by a seismometer.,Reference Points,Ground Displacement,Intensity,Focal Depth,1
+MCQ,Material deforms considerably with slight increase in stress.,Yielding,Strain Hardening,Fracture,Breaking,0
+MCQ,Material regains original dimensions when load is removed.,Resilience,Plasticity,Elasticity,Buckling,2
+MCQ,Material deforms in plastic range without breaking.,Elongation,Ductility,Resilience,Stiffness,1
+MCQ,Flexibility of a structure.,Composite Stiffness,Rigidity,Inverse Stiffness,Static Deflection,2
+MCQ,Composite material exhibits elastic properties in one direction different from perpendicular.,Orthotropic,Homogeneous,Isotropic,Prismatic,0
+MCQ,Material has same composition at every point but elastic properties differ.,Homogeneous,Orthotropic,Isotropic,Prismatic,0
+MCQ,Material has same elastic properties in all directions.,Orthotropic,Isotropic,Homogeneous,Prismatic,1
+MCQ,Material returns to original shape when load is removed.,Buckling,Elasticity,Plasticity,Resilience,1
+MCQ,Material deforms considerably with slight increase in stress.,Yielding,Strain Hardening,Breaking,Fracture,0
+MCQ,Material has same composition at any point.,Isotropic,Plastic,Homogeneous,Orthotropic,2
+MCQ,Ability of a material to deform in the plastic range without breaking.,Stiffness,Resilience,Elongation,Ductility,3
+MCQ,Ability of a material to absorb energy in the plastic range.,Elasticity,Toughness,Plasticity,Stiffnes,1
+MCQ,Property of a material which makes it return to its original dimension when the load is removed ,Plasticity ,Elasticity ,Permanent Set ,Stiffness,1
+MCQ,Property of a material to absorb energy in the elastic range,Resilience,Stiffness,Plasticity,Toughness,0
+MCQ,Stressing high?strength steel wires before concrete hardens,Pre?Tensioning,Creep,Post?Tensioning,Relaxation,0
+MCQ,Stressing high?strength steel after the concrete has been cast and has attained sufficient strength,Post?Tensioning,Creep,Pre?Tensioning,Relaxation,0
+MCQ,Loss of stress that takes place with the passage of time as concrete is held at a constant strain,Post?Tensioning,Creep,Pre?Tensioning,Relaxation,3
+MCQ,Retarding force acting opposite a body in motion,Inertia,Dynamic,Static Friction,Kinetic Friction,3
+MCQ,"Structural member with unsupported height to least lateral dimension ? 3, used primarily to support axial load",Pedestal,Column,Deep Beam,Corbel,1
+MCQ,Force which determines whether the body will be in equilibrium or will have a varying state of motion,Equilibrium,Resultant,Momentum,Impulse,1
+MCQ,Identify the principle used in equations related to the deformation of axially loaded materials: Stress is proportional to strain within the elastic region,Hooke�s Law,Young�s Modulus,Poisson�s Ratio,St. Venant�s Principle,0
+MCQ,"Identify the principle used in equations related to the deformation of axially loaded materials: That in the deformation of axially loaded members, the ratio of lateral to longitudinal strain is constant",Hooke�s Law,Young�s Modulus,Poisson�s Ratio,St. Venant�s Principle,2
+MCQ,"Identify the principle used in equations related to the deformation of axially loaded materials: Within elastic range, constant of proportionality defines linear relationship between stress and strain",Hooke�s Law,Young�s Modulus,Poisson�s Ratio,St. Venant�s Principle,1
+MCQ,Force generated by a body at rest,Impact,Impulse,Dynamic,Static,3

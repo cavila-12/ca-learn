@@ -1,0 +1,17 @@
+{
+  "modules": [
+    {
+      "id": "sample",
+      "title": "Sample Module (Algebra)",
+      "description": "Example markdown module with formulas.",
+      "file": "modules/sample.md"
+    },
+    {
+      "id": "TEST",
+      "title": "Test Module (Algebra)",
+      "description": "Example markdown module with formulas.",
+      "file": "modules/test.md"
+    }
+  ]
+}
+

@@ -1,0 +1,2 @@
+Type,Question,Choice1,Choice2,Choice3,Choice4,Answer,OptionalDefs
+FORMULA,Distance Formula,"d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}","d = Distance; (x_1, y_1) = Coordinates of the first point; (x_2, y_2) = Coordinates of the second point"

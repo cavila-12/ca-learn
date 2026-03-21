@@ -1,0 +1,103 @@
+Type,Question,Choice1,Choice2,Choice3,Choice4,Answer/index,OptionalDefs
+MCQ,"If the ground water  table in a soil formation rises as a result of floodin, the bearing capacity of the soil",Decreases,Depend on the footing load,Increases,Unaffected,0
+MCQ,"In accordance with the Unified Solid Classification System, a soil grain having a size greater than No. 200 sieve opening (0.074 mm) but less than that of No. 4 sieve (4.75 mm opening) is called",gravel,pebble,cobble,sand,3
+MCQ,A granular soil deposit is considered medium dense if the blow count of a standard penetration test is between,Over 50,4 to 10,10 to 30,30 to 50,2
+MCQ,"According to USCS, particles with size greater than 75 mm are called:",Rock,Gravel,Boulder,Cobble,3
+MCQ,"A type of flow where at any instant, the amount of fluid particles passing through a pipe section is constant.",Laminar,Continuous,Uniform,Steady,3
+MCQ,"If the ground water table in a soil formation rises as a resulting of flooding, the bearing capacity of the soil",increases,unaffected,decreases,depends of the footing load,2
+MCQ,"One of the following foundation conditions does not affect the bearing capacity of the supporting soil.",Unit weight of the soil,Depth of founding of footings,Load imposed onto the soil,Position of ground water table,2
+MCQ,"A pressure surge or wave caused when a fluid in motion is forced to stop or change direction suddenly (momentum change) is referred to in hydraulics as:",water hammer,potential head,hydraulic jump,hydrodynamics,0
+MCQ,"A line joining the points of highest elevation of water in a series of vertical open pipes rising from a pipeline in which water flows under pressure is referred to as:",hydraulic head,hydraulic loss,hydraulic gradient,hydraulic jump,2
+MCQ,Section 302.2.2 of the national Structural Code of the Philippines provides that the slope of cut surfaces shall be no steeper than ___ is safe for intended use.,1:3,1:1.5,1:2,1:1,2
+MCQ,Cohesive soil deposit is considered soft if the unconfined compression strength (kPa) is between:,0 - 24,48 - 96,24 - 48,96 - 192,2
+MCQ,"It is an abrupt rise in water surface which results from retarding water flowing at lower stage.",Velocity Head,Celerity,Head loss,Hydraulic Jump,3
+MCQ,"A branch of hydraulics which deals with the study of forces (including velocity and acceleration) exerted by or upon liquids in motion.",Hydrodynamics,Statics,Hydraulic Gradient,Hydrostatic,0
+MCQ,It is the most used property in soil properties.,Void ratio,Specific gravity,Porosity,Unit Weight,0
+MCQ,A device used to determine the undrained shear strength of the soil which consists of four equal-sized thin steel plates welded to a steel torque rod. The vane is pushed into the soil and a torque T is applied at the top of the torque rod to rotate the vane at a uniform speed to cause failure.,Triaxial Vane,Direct Vane,Shear Vane,Mohr Vane,2
+MCQ,"In civil engineering, what is soil?","Soil is the natural material that covers the Earth's surface and is composed of various minerals, organic matter, water, air, and living organisms. It is a complex mixture of solid particles, liquids, and gases that interact with each other in various ways. Soil is important in civil engineering because it provides support for structures like buildings, bridges, and roads.",The unconsolidated mineral or organic material on the immediate surface of the Earth that serves as a natural medium for the growth of land plants.,"Soil is made from the breaking down of rocks and organic matter by physical, chemical and biological processes.",None of these,0
+MCQ,"If the deviator stress is increased, the shear stress will increase in the _________.",Horizontal plane,Vertical plane,Both,None of the above,0
+MCQ,It is the attraction between water molecules.,adhesion,cohesion,capillary,moleculotion,1
+MCQ,When will the ship be stable?,Metacenter is above the center of gravity,The center of gravity is above the metacenter,When there is no center of gravity,When there is no metacenter,0
+MCQ,Pressure rise in water hammer is affected by:,length of pipe,time of closure,velocity,all of the above,3
+MCQ,A fireman aims his hose at an angle of 30 degrees. What would be the shape of the projectile?,parabola,hyperbola,circle,ellipse,0
+MCQ,The ratio between the weight of water and the weight of solid particles.,moisture content,void ratio,porosity,saturation,0
+MCQ,The liquid flow is based on the concept of conservation of ___________.,momentum,mass,force,none of these,1
+MCQ,The shear strength is _________.,Directly proportional to cohesion,Inversely proportional to the angle of friction,Decreases when normal stress increases,Increases when normal stress increases,3
+MCQ,The property of soil which water percolates throughout its layer.,ductility,permeability,brittleness,resilience,1
+MCQ,"In Terzaghi's principle, the term Nc, Nq, and N? are based on ___________.",angle of sliding,angle of friction,bearing,tension,1
+MCQ,Which of the following is not performed in the laboratory?,Vane shear test,Direct Shear test,Triaxial Shear Test,Standard Proctor Test,0
+MCQ,Which is not a characteristic of a soil mass?,gas,porosity,void ratio,none of these,3
+MCQ,"In an open tube, what is the shape of a mercury?",Curved up,Horizontal,Curved down,Vertical,0
+MCQ,The water content of soil could _______.,be greater than 100%,be less than 0%,never be greater than 100%,have values only from 0% to 100%,0
+MCQ,A granular soil deposit is considered loose if the blow count of a standard penetration test is between:,10-30,30-50,4-10,0-4,2
+MCQ,The admixture of coarse particles like sand and silt to clay causes:,Increase in cohesion and strength,Increase in moisture retention capacity,Decrease in both liquid limit and plasticity index,Decrease in shear strength,2
+MCQ,The quantity of seepage of water through soils is proportional to:,Soil texture and particle size,Total head loss through the soil only,Coefficient of permeability only,Both coefficient of permeability and total head loss through the soil,3
+MCQ,The shear strength of a cohesionless is:,inversely proportional to the normal stress.,proportional to the tangent of the angle of shearing resistance.,constant regardless of the applied load.,directly proportional to the cohesive strength.,1
+MCQ,What is the term used to describe the ratio of the weight of water to the weight of solids?,Void Ratio,Degree of Saturation,Water Content,Porosity,2
+MCQ,"If a fully saturated soil sample has a water content of 100%, what is its void ratio?",Equal to the specific gravity of the soil solids,Less than the specific gravity of the soil solids,Greater than the specific gravity of the soil solids,Independent of the specific gravity of the soil solids,0
+MCQ,An ideal liquid has the characteristics of:,same as gas,inviscid,frictionless and incompressible,perfectly elastic,2
+MCQ,A manometer is a device used to measure:,Atmospheric Pressure,Low Pressure,Fluid Pressure in Pipes,Velocity of Flow in Channels,2
+MCQ,"In a vessel containing water, what is the relationship between the height of the rise at the sides and the depth of the depression at the center?",The rise at the sides is greater than the depression at the center.,The rise at the sides is less than the depression at the center.,The rise at the sides is equal to the depression at the center.,There is no consistent relationship between the rise at the sides and the depression at the center.,2
+MCQ,"In open channel flow, which cross-sectional shape is considered the most hydraulically efficient for a given flow area?",Rectangular,Trapezoidal,Triangular,Semi-circular,3
+MCQ,Which term best describes a flow where the average velocity remains constant along its complete length?,Steady,Laminar,Uniform,Continuous,2
+MCQ,Which of the following statements about soil compaction is correct?,Wet side is more compacted than dry side.,Dry soil swells more than wet soil when it absorbs water,Compaction does not affect the permeability of the soil.,Permeability increases when dry density increases,1
+MCQ,A 50-millimeter diameter split barrel sample is driven into the ground and the load of a cased burbale by means of blows from 65 kg mass hammer falling freely through a distance of 760 millimeters. The sample is driven a total of 450 millimeter into the soil. Which of the following is the test best described by this procedure?,Cone Penetration Test,Standard Penetration Test,Dynamic Cone Penetration Test,Field Vane Shear Test,1
+MCQ,Which field test is used to determine the in-situ density of compacted soil by measuring the volume of a test hole filled with calibrated sand?,Sand Cone Test,Nuclear Density Test,Standard Proctor Test,Hydrometer Test,0
+MCQ,Sudden pressure surge when a valve is closed rapidly in a pipe.,Pipe Surge,Hydraulic Jump,Water Hammer,Cavitation,2
+MCQ,What test is not performed in laboratory?,Direct Shear Test,Unconfined Compression Test,Triaxial Shear Test,Vane Shear Test,3
+MCQ,Which laboratory test is MOST commonly used to determine the shear strength parameters of soil by applying a horizontal force along a predetermined failure plane?,Triaxial Test,Consolidation Test,Direct Shear Test,Unconfined Compression Test,2
+MCQ,"This soil test is similar to compression test in concrete cylinder. It is rapid loading test (5min) which may be used to determine peak strength, qu and the deformation modulus of any soil which will cohere enough to retain a given shape usually cylindrical.",Unconfined Compression Test,California Bearing Ratio (CBR),Standard Penetration Test,Modified Proctor Test,0
+MCQ,It is an abrupt rise in water surface which results from retarding water flowing at lower stage.,Capillary,Supercritical flow,Water hammer,Hydraulic Jump,3
+MCQ,"Which test is a common in-situ testing method used to determine the geotechnical engineering properties of subsurface soils, and is a simple and inexpensive test for estimating the relative density of soils and approximate shear strength parameters?",Cone Penetration Test,Dynamic Cone Penetration Test,Standard Penetration Test,Field Vane Shear Test,2
+MCQ,It is a branch of hydraulics which deals with the study of forces (including velocity and acceleration) exerted by or upon liquids in motion.,Hydrodynamics,Hydrology,Hydraulics,Hydrostatics,0
+MCQ,Which field test is used to evaluate the strength of subgrade and pavement layers by measuring the penetration of a cone driven dynamically by a falling hammer?,Cone Penetration Test,Dynamic Cone Penetration Test,Standard Penetration Test,Field Vane Shear Test,1
+MCQ,A granular soil deposit is considered loose if the blow count of a standard penetration test is between:,4-10,10-30,30 - 50,Over 50,0
+MCQ,"The most reliable method now available for determination of shear strength parameters and is widely used for research and conventional testing. In this test, a soil sample is about 1.5inches in diameter and inches in length is generally used.",Shear Box Test,Shear Vane Test,Tri-axial Shear Test,Field Density Test,2
+MCQ,The classification test required to determine the in place density and relative state of compaction for a coarse grain soil.,Unconfined Compression Test,Atterberg Limits,Standard Proctor Test,Relative Density Test,3
+MCQ,Which of the following gives the least shear test?,Direct Shear Test,Shear Vane Test,Triaxial Test,Standard Penetration Test,0
+MCQ,Which of the following gives the simple and less expensive shear test?,Direct Shear Test,Shear Vane Test,Triaxial Test,Standard Penetration Test,0
+MCQ,Which of the following gives the most comprehensive shear test?,Direct Shear Test,Shear Vane Test,Triaxial Test,Standard Penetration Test,2
+MCQ,The study of how liquids move and behave under different conditions.,Hydrodynamics,Hydrology,Hydrostatics,Hydraulic Jump,0
+MCQ,Which of the following is not affected by minor loss?,long pipe,both long and short pipe,short pipe,can't say,0
+MCQ,"In the context of using soil as a construction material, which of the following properties is NOT typica;;y considered a primary parameter for evaluating its sustainability?",tensile strength,shear strength,compaction strength,compressive strength,0
+MCQ,Which of the following is not a characteristics of cohesionless soil?,high shear strength,easy to compact,prone to settlement,practically impermeable,0
+MCQ,What is the ratio of the volume of voids to the volume of solids?,porosity,Void ratio,degree of saturation,moisture content,1
+MCQ,What is the ratio of the volume of voids to the total volume?,porosity,Void ratio,degree of saturation,moisture content,0
+MCQ,What is the ratio of the volume of water to the volume of voids?,porosity,Void ratio,degree of saturation,moisture content,2
+MCQ,What is the ratio of the weight of water to the weight of solids in a given volume of soil?,porosity,Void ratio,degree of saturation,moisture content,3
+MCQ,What happens when there is a lowering of water table?,there is a decrease of lateral pressure,there is an increase of lateral pressure,the same lateral pressure is produced,none of the above,0
+MCQ,It is a soil whose present effective over burn pressure is less than that which the soil experienced in the past.,normally consolidated,over consolidated,unconsolidated soil,none of the above,1
+MCQ,Determine the force why small insects can walk on the water.,surface tension,water pressure,lateral pressure of water,buoyant force,0
+MCQ,The surface tension phenomenon is one of the reasons that small insects can walk on water. Determine the value of surface tension at normal room temperature.,0.092N/m,0.086N/m,0.075N/m,0.064N/m,3
+MCQ,The volume of liquid passing a cross-section of a stream.,Discharge,Permeability,Flow,Capillary,0
+MCQ,A ship floating in seawater is stable if the metacentric height is:,below the center of gravity,above the center of gravity,coincides with the center of gravity,the draft of the ship causes a buoyant force equal to the weight of the ship and its cargo.,1
+MCQ,"If with steady flow in any length or reach of a stream, the average velocity at every cross-section is the same in that reach, the flow is said to be:",continuous,steady,laminar,uniform,3
+MCQ,A body is place in a liquid is buoyed up by a force equal to the weight of the displaced liquid. This principle of buoyancy was attributed to:,Pascal,Bernoulli,Boyle,Archimedes,3
+MCQ,A process by which water-saturated soil sediment temporarily loss strength and acts as a fluid.,Consolidation,Plasticity,Settlement,Liquefaction,3
+MCQ,One of the following foundation conditions does not affect foundation settlement.,Plasticity of the soil,Depth of founding footings,Position of ground water table,None of the choices,3
+MCQ,"In accordance with the Unified Soils Classification System, which are considered coarse grained if the passing thru No.200 sieve is less than:",30,40,50,60,2
+MCQ,Section 302.2.2 of the NSCP C101-1O provides that the slope of cut surfaces of the ground shall be no steeper than is safe for the intended use and shall be no steeper than:,1 to 3,1 to 2,1 to 1,1 to 1.5,1
+MCQ,The component of shear strength of a rock or soil that interparticle friction is called____.,plasticity,skin friction,adhesion,cohesion,3
+MCQ,Soil derives its strength from its capacity to resist.,Shear,Torsion,Tension,Compression,1
+MCQ,Which of the following is not a component of the soil mass?,Gas,Organic matter,Minerals,None in the list,3
+MCQ,The cohesion strength of a cohesive soil is a compression strength c = kqu where k is equal to ___.,0.50,0.25,0.33,1.00,0
+MCQ,"When the path lines of the individual particles of a flowing liquid are irregular curves and continually cross each other and form a complicated network, the flow is called:",turbulent,continuous,laminar,uniform,0
+MCQ,The largest grain size that passes a No. 200 sieve in millimeters is:,0.0740mm,0.0200mm,0.0640mm,0.0054mm,0
+MCQ,"In any stream flowing steadily without friction, the total energy contained is the same at every point in its path of flow. This principle is attributed to:",Bernoulli,Archimedes,Pascal,Boyle,0
+MCQ,The pressure exerted onto a liquid is transmitted undiminished to all portions of the liquid. This principle of mechanics is attributed to:,Bernoulli,Archimedes,Pascal,Boyle,2
+MCQ,Water has a maximum unit weight at a temperature in degrees Celsius of:,0,4,100,32,1
+MCQ,The fraction of soils passing which sieve number is used for Atterberg's limit tests of soils?,60,30,50,40,3
+MCQ,The ratio between the volume of the water and the volume of voids in a soil mass is referred to as:,porosity,water content,void ratio,degree of saturation,3
+MCQ,The fluid exerted by mercury is roughly how many greater than that by water?,10.6 times,11.6 times,13.6 times,12.6 times,2
+MCQ,One of the following is NOT characteristic of cohesionless soil:,Easy to compact,High shear strength,Practically impermeable,Prone to settlement under vibratory load,1
+MCQ,The total pressure force on a plane surface is equal to the area multiplied by the intensity of pressure at the centroid if the surface is:,horizontal,inclined,vertical,all of these,3
+MCQ,Triaxial shear test acts on what axis?,x-axis,y-axis,both axis,all plane axis except x and y axis,3
+MCQ,"If the volume of voids is equal to the volume of solids, what is the porosity and void ration equal to respectively?",0.5 and 1,0 and 0.5,0 and 1,1 and 0.5,0
+MCQ,The intensity of vertical stress at a depth due to a point load acting on the surface of a semi-infinite elastic soil mass is.,directly proportional to the depth,inversely proportional to the depth,directly proportional to the square of depth,inversely proportional to the square of depth,2
+MCQ,"When the metacenter of a floating body is lower than the center of gravity, then the body will be in",unstable equilibrium,stable equilibrium,neutral equilibrium,"not of a, b and c are correct",0
+MCQ,The metacentric height is the distance between the,center of gravity of the floating body and the center of buoyancy,center of gravity of the floating body and the metacenter,metacenter and the center of buoyancy,original center of buoyancy and new center of buoyancy,1
+MCQ,Negative skin friction on piles,caused by soft clay,decreases the pile capacity,is caused due to the relative settlement of soil,all of the above,3
+MCQ,Specific weight of liquid ___,remains constant at every place,does not remain constant at every place,does not vary on any other planet,varies from place to place on Earth,2
+MCQ,"In civil engineering, soil is ___",found in Earth's crust,It is all plants grow,Uncemented aggregate,All of these,2
+MCQ,The weight per unit volume of a liquid at a standard temperature and pressure is called:,specific weight,specific gravity,mass density,none of the above,0
+MCQ,"In a triangular channel section, the most economical section is achieved when sloping sides make an angle of __ with vertical.",90,30,60,45,3

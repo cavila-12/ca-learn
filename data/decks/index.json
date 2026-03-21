@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "name": "Sample Deck",
+      "path": "data/decks/sample.csv"
+    },
+    {
+      "name": "PSAD Formula Deck",
+      "path": "data/decks/psad-formula.csv"
+    },
+    {
+      "name": "Surveying Formula Deck",
+      "path": "data/decks/surveying-formula.csv"
+    },
+    {
+      "name": "Transportation Engineering Formula Deck",
+      "path": "data/decks/transportation-formula.csv"
+    },
+    {
+      "name": "Basic Math Formula Deck",
+      "path": "data/decks/basic-math-formula.csv"
+    },
+    {
+      "name": "HPGE Formula Deck",
+      "path": "data/decks/hpge-formula.csv"
+    },
+    {
+      "name": "MSTC Terms Deck",
+      "path": "data/decks/mstc-terms.csv"
+    },
+    {
+      "name": "HPGE Terms Deck",
+      "path": "data/decks/hpge-terms.csv"
+    },
+    {
+      "name": "PSAD Terms Deck",
+      "path": "data/decks/psad-terms.csv"
+    }
+  ]
+}
+

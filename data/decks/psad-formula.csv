@@ -1,0 +1,11 @@
+Type,Question,Choice1,Choice2,Choice3,Choice4,Answer,OptionalDefs
+FORMULA,Normal stress,"\sigma = \frac{F}{A}","F = Force; A = Area"
+FORMULA,Shear stress,"\tau = \frac{F}{A}","F = Force; A = Area"
+FORMULA,Strain,"\epsilon = \frac{\Delta L}{L_0}","\Delta L = Change in length; L_0 = Original length"
+FORMULA,Young's modulus,"E = \frac{\sigma}{\epsilon}","\sigma = Normal stress; \epsilon = Strain"
+FORMULA,Hooke's Law,"F = k \cdot x","F = Force; k = Spring constant; x = Displacement"
+FORMULA,Poisson's ratio,"\nu = -\frac{\epsilon_{trans}}{\epsilon_{axial}}","\epsilon_{trans} = Transverse strain; \epsilon_{axial} = Axial strain"
+FORMULA,Shear modulus,"G = \frac{\tau}{\gamma}","\tau = Shear stress; \gamma = Shear strain"
+FORMULA,Bulk modulus,"K = -V \cdot \frac{\Delta P}{\Delta V}","V = Original volume; \Delta P = Change in pressure; \Delta V = Change in volume"
+FORMULA,Stress-strain relationship,"\sigma = E \cdot \epsilon","\sigma = Normal stress; E = Young's modulus; \epsilon = Strain"
+FORMULA,Strain energy,"U = \frac{1}{2} \cdot \sigma \cdot \epsilon \cdot V","\sigma = Normal stress; \epsilon = Strain; V = Volume"

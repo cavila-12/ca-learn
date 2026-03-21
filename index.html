@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f8" id="themeColorMeta" />
+    <title>CELE Reviewer</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+
+    <!-- MathJax: cached by service worker after first load (works offline after that). -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body data-page="home">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="iconbtn" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+        <div class="brand">
+          <div class="brand__name">CELE Reviewer</div>
+          <div class="brand__tag" id="statusTag">Offline-ready</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button class="pill" id="installBtn" hidden>Install</button>
+      </div>
+    </header>
+
+    <nav class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__header">
+        <div class="drawer__title">Menu</div>
+        <button class="iconbtn" id="closeDrawerBtn" aria-label="Close menu">✕</button>
+      </div>
+      <div class="drawer__items">
+        <a class="navitem" href="./index.html" aria-current="page">Home</a>
+        <a class="navitem" href="./quiz.html">Quiz</a>
+        <a class="navitem" href="./decks.html">Decks</a>
+        <a class="navitem" href="./modules.html">Modules</a>
+        <a class="navitem" href="./settings.html">Settings</a>
+      </div>
+      <div class="drawer__footer">
+        <div class="muted small">
+          Tip: first load needs internet once (MathJax + defaults). After that, it works offline.
+        </div>
+      </div>
+    </nav>
+    <div class="backdrop" id="backdrop" hidden></div>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Review anywhere, even offline.</h1>
+        <p class="muted">
+          Create decks manually, import CSV, and review as MCQ, flashcards, or formula cards.
+        </p>
+        <div class="hero__actions">
+          <a class="primary" href="./quiz.html">Start Quiz</a>
+          <a class="secondary" href="./decks.html">Manage Decks</a>
+          <a class="ghost" href="./modules.html">Open Modules</a>
+        </div>
+      </section>
+
+      <section class="grid2">
+        <div class="card">
+          <h2>Main actions</h2>
+          <ul class="list">
+            <li>Quiz: progress + score</li>
+            <li>Flashcards: flip animation</li>
+            <li>Formula cards: MathJax rendering</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Offline</h2>
+          <ul class="list">
+            <li>Service worker caches app shell</li>
+            <li>Defaults loaded from <code>data/decks</code></li>
+            <li>Your edits stored in localStorage</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">
+        Stored locally in your browser. Defaults come from <code>data/decks</code>.
+      </div>
+    </footer>
+
+    <template id="toastTpl">
+      <div class="toast" role="status" aria-live="polite"></div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

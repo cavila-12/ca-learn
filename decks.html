@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f8" id="themeColorMeta" />
+    <title>CELE Reviewer • Decks</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/decks.css" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+  </head>
+  <body data-page="decks">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="iconbtn" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+        <div class="brand">
+          <div class="brand__name">CELE Reviewer</div>
+          <div class="brand__tag" id="statusTag">Decks</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button class="pill" id="installBtn" hidden>Install</button>
+      </div>
+    </header>
+
+    <nav class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__header">
+        <div class="drawer__title">Menu</div>
+        <button class="iconbtn" id="closeDrawerBtn" aria-label="Close menu">✕</button>
+      </div>
+      <div class="drawer__items">
+        <a class="navitem" href="./index.html">Home</a>
+        <a class="navitem" href="./quiz.html">Quiz</a>
+        <a class="navitem" href="./decks.html" aria-current="page">Decks</a>
+        <a class="navitem" href="./modules.html">Modules</a>
+        <a class="navitem" href="./settings.html">Settings</a>
+      </div>
+    </nav>
+    <div class="backdrop" id="backdrop" hidden></div>
+
+    <main class="container">
+      <!-- Decks -> List -->
+      <section id="decksListView">
+        <div class="pagehead">
+          <h2>Decks</h2>
+          <div class="pagehead__right">
+            <button class="primary" id="newDeckBtn">New deck</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Your decks</h3>
+          <div id="deckList" class="decklist"></div>
+        </div>
+      </section>
+
+      <!-- Decks -> Open/Edit -->
+      <section id="deckEditView" hidden style="margin-top:12px">
+        <div class="pagehead">
+          <div>
+            <h2 id="deckEditorTitle">Deck</h2>
+            <div class="muted small">Edit cards, import CSV, or export CSV.</div>
+          </div>
+          <div class="pagehead__right">
+            <button class="ghost" id="backToDecksBtn">Back to list</button>
+            <button class="ghost" id="exportDeckBtn" title="Export current deck to CSV">Export CSV</button>
+            <button class="danger" id="deleteDeckBtn" title="Delete deck">Delete</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="formgrid">
+            <label class="field">
+              <span>Deck name</span>
+              <input id="deckNameInput" type="text" placeholder="e.g., Algebra basics" />
+            </label>
+            <label class="field">
+              <span>Card type</span>
+              <select id="cardTypeSelect">
+                <option value="MCQ">MCQ</option>
+                <option value="FLASHCARD">FLASHCARD</option>
+                <option value="FORMULA">FORMULA</option>
+                <option value="IMPORT_CSV">Import from CSV</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="deckeditlayout">
+            <div class="deckeditlayout__left">
+              <form id="cardForm" class="cardform" autocomplete="off">
+                <input type="hidden" id="editCardId" value="" />
+
+                <div class="cardform__type" data-type="MCQ">
+                  <label class="field">
+                    <span>Question</span>
+                    <textarea id="mcqQuestion" rows="3" placeholder="Question..."></textarea>
+                  </label>
+                  <div class="formgrid2">
+                    <label class="field"><span>Choice 1</span><input id="mcqC1" type="text" /></label>
+                    <label class="field"><span>Choice 2</span><input id="mcqC2" type="text" /></label>
+                    <label class="field"><span>Choice 3</span><input id="mcqC3" type="text" /></label>
+                <label class="field"><span>Choice 4</span><input id="mcqC4" type="text" /></label>
+              </div>
+              <label class="field">
+                <span>Correct choice</span>
+                <select id="mcqAnswerIndex">
+                  <option value="0">Choice 1</option>
+                  <option value="1">Choice 2</option>
+                  <option value="2">Choice 3</option>
+                  <option value="3">Choice 4</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Optional definitions (separate with ';')</span>
+                <input id="mcqDefs" type="text" placeholder="e.g., F = Force; A = Area" />
+              </label>
+            </div>
+
+                <div class="cardform__type" data-type="FLASHCARD" hidden>
+                  <label class="field">
+                    <span>Front (question)</span>
+                    <textarea id="fcFront" rows="3" placeholder="Front..."></textarea>
+                  </label>
+                  <label class="field">
+                    <span>Back (answer)</span>
+                    <textarea id="fcBack" rows="3" placeholder="Back..."></textarea>
+                  </label>
+                </div>
+
+                <div class="cardform__type" data-type="FORMULA" hidden>
+                  <label class="field">
+                    <span>Formula name</span>
+                    <input id="fmName" type="text" placeholder="e.g., Stress formula" />
+                  </label>
+                  <label class="field">
+                    <span>Formula (LaTeX recommended)</span>
+                    <textarea id="fmFormula" rows="3" placeholder="e.g., \\sigma = \\frac{F}{A}"></textarea>
+                  </label>
+                  <label class="field">
+                    <span>Optional explanation / symbol definitions (separate with ';')</span>
+                    <input id="fmExplain" type="text" placeholder="e.g., F = Force; A = Area" />
+                  </label>
+                </div>
+
+                <div class="cardform__type csvimport" data-type="IMPORT_CSV" hidden>
+                  <div class="muted small">
+                    Import a CSV file into this deck. Defaults in <code>data/decks</code> load automatically.
+                  </div>
+                  <div class="toolbar csvimport__toolbar">
+                    <input type="file" id="csvFileInput" accept=".csv,text/csv" />
+                    <button class="secondary" type="button" id="parseCsvBtn">Parse</button>
+                    <button class="primary" type="button" id="importCsvBtn" disabled>Import into deck</button>
+                  </div>
+                  <div id="csvPreview" class="csvpreview"></div>
+                </div>
+
+                <div class="navrow" id="cardFormActions">
+                  <button class="secondary" type="button" id="cardCancelBtn" hidden>Cancel edit</button>
+                  <button class="primary" type="submit" id="cardSaveBtn">Add card</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="deckeditlayout__right">
+              <h4>Contents</h4>
+              <div id="cardList" class="cardlist"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">Defaults come from <code>data/decks</code>. Your edits save to localStorage.</div>
+    </footer>
+
+    <template id="toastTpl">
+      <div class="toast" role="status" aria-live="polite"></div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

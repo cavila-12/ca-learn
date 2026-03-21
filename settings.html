@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f8" id="themeColorMeta" />
+    <title>CELE Reviewer • Settings</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+  </head>
+  <body data-page="settings">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="iconbtn" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
+        <div class="brand">
+          <div class="brand__name">CELE Reviewer</div>
+          <div class="brand__tag" id="statusTag">Settings</div>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <button class="pill" id="installBtn" hidden>Install</button>
+      </div>
+    </header>
+
+    <nav class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__header">
+        <div class="drawer__title">Menu</div>
+        <button class="iconbtn" id="closeDrawerBtn" aria-label="Close menu">✖</button>
+      </div>
+      <div class="drawer__items">
+        <a class="navitem" href="./index.html">Home</a>
+        <a class="navitem" href="./quiz.html">Quiz</a>
+        <a class="navitem" href="./decks.html">Decks</a>
+        <a class="navitem" href="./modules.html">Modules</a>
+        <a class="navitem" href="./settings.html" aria-current="page">Settings</a>
+      </div>
+      <div class="drawer__footer">
+        <div class="muted small">Update and troubleshooting controls.</div>
+      </div>
+    </nav>
+    <div class="backdrop" id="backdrop" hidden></div>
+
+    <main class="container">
+      <section class="pagehead">
+        <h2>Settings</h2>
+      </section>
+
+      <section class="card">
+        <h3>Updates</h3>
+        <div class="muted small">If the UI doesn’t reflect changes, use these controls to refresh the service worker cache.</div>
+        <div class="toolbar" style="margin-top:10px">
+          <button class="secondary" id="checkUpdatesBtn">Check for update</button>
+          <button class="primary" id="applyUpdateBtn" hidden>Apply update & reload</button>
+          <button class="ghost" id="reloadBtn">Reload now</button>
+        </div>
+        <div class="muted small" id="updateStatus" style="margin-top:8px"></div>
+      </section>
+
+      <section class="card" style="margin-top:12px">
+        <h3>Data</h3>
+        <div class="muted small">Clears local edits and forces default decks/modules to reload.</div>
+        <div class="toolbar" style="margin-top:10px">
+          <button class="danger" id="resetDataBtn">Reset local data</button>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:12px">
+        <h3>About</h3>
+        <div class="muted small">App version: <code id="appVersion">-</code></div>
+        <div class="muted small">Service worker: <code id="swStatus">-</code></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">Tip: If you’re using VS Code Go Live, a hard refresh may still be needed once after an update.</div>
+    </footer>
+
+    <template id="toastTpl">
+      <div class="toast" role="status" aria-live="polite"></div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
