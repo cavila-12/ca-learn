@@ -66,6 +66,7 @@ function ensureSwProgressUi() {
     wrap.hidden = true;
     wrap.innerHTML = `
       <div class="muted small" id="swProgressLabel">Downloading offline resources?</div>
+      <div class="muted small" id="swProgressDetail" style="margin-top:4px"></div>
       <div class="swprogress__row" style="margin-top:6px">
         <div class="swprogress__bar" aria-label="Service worker download progress">
           <div class="swprogress__fill" id="swProgressFill"></div>
@@ -80,6 +81,7 @@ function ensureSwProgressUi() {
   return {
     wrap,
     label: document.querySelector("#swProgressLabel"),
+    detail: document.querySelector("#swProgressDetail"),
     fill: document.querySelector("#swProgressFill"),
     pct: document.querySelector("#swProgressPct")
   };
@@ -104,12 +106,16 @@ export function initSettingsPage() {
   const v = $("#appVersion");
   const progressUi = ensureSwProgressUi();
   let lastTotal = 0;
+  let lastDone = 0;
+  let lastUrl = "";
+  let lastProgressTs = Date.now();
   let hideTimer = null;
   let progressPollTimer = null;
-  function showProgress(done, total, label) {
+  function showProgress(done, total, label, detail) {
     if (!progressUi) return;
     progressUi.wrap.hidden = false;
     if (progressUi.label && label) progressUi.label.textContent = label;
+    if (progressUi.detail) progressUi.detail.textContent = detail || "";
     const pct = total ? Math.round((done / total) * 100) : 0;
     if (progressUi.fill) progressUi.fill.style.width = `${Math.min(100, Math.max(0, pct))}%`;
     if (progressUi.pct) progressUi.pct.textContent = `${pct}%`;
@@ -127,17 +133,26 @@ export function initSettingsPage() {
       const data = event?.data || {};
       if (data.type === "SW_CACHE_START") {
         lastTotal = Number(data.total) || 0;
-        showProgress(0, lastTotal, "Downloading offline resources?");
+        lastDone = 0;
+        lastUrl = "";
+        lastProgressTs = Date.now();
+        showProgress(0, lastTotal, "Downloading offline resources?", "");
       }
       if (data.type === "SW_CACHE_PROGRESS") {
         const total = Number(data.total) || lastTotal || 0;
         const done = Number(data.done) || 0;
         lastTotal = total;
-        showProgress(done, total, data.label || "Downloading offline resources?");
+        lastDone = done;
+        lastUrl = String(data.url || "");
+        lastProgressTs = Date.now();
+        showProgress(done, total, data.label || `Downloading offline resources? (${done}/${total})`, lastUrl);
       }
       if (data.type === "SW_CACHE_DONE") {
         const total = Number(data.total) || lastTotal || 0;
-        showProgress(total, total, "Offline resources ready.");
+        lastDone = total;
+        lastUrl = "";
+        lastProgressTs = Date.now();
+        showProgress(total, total, "Offline resources ready.", "");
         hideProgressSoon();
       }
     });
@@ -151,10 +166,25 @@ export function initSettingsPage() {
       const total = Number(data.total) || 0;
       const done = Number(data.done) || 0;
       if (data.state === "done") {
-        showProgress(total, total, "Offline resources ready.");
+        lastDone = total;
+        lastUrl = "";
+        lastProgressTs = Date.now();
+        showProgress(total, total, "Offline resources ready.", "");
         hideProgressSoon();
       } else if (total) {
-        showProgress(done, total, "Downloading offline resources?");
+        const url = String(data.url || "");
+        if (done !== lastDone || url !== lastUrl) {
+          lastDone = done;
+          lastUrl = url;
+          lastProgressTs = Date.now();
+        }
+        const stalled = Date.now() - lastProgressTs > 12000 && done > 0 && done < total;
+        const label = stalled ? `Download stalled at ${Math.round((done/total)*100)}%` : `Downloading offline resources? (${done}/${total})`;
+        showProgress(done, total, label, url);
+        if (stalled) {
+          const status = $("#updateStatus");
+          if (status) status.textContent = "Caching seems stuck. Try ?Reset offline cache? or check if any file is missing/blocked.";
+        }
       }
     };
 

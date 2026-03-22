@@ -59,7 +59,7 @@ const APP_SHELL = [
   "./data/decks/hpge-terms.csv",
   "./data/decks/basic-math-formula.csv",
   "./modules/index.json",
-  "./modules/sample.md"
+  "./modules/simple-curves.md"
 ];
 
 async function broadcastSwMessage(msg) {

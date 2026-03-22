@@ -4,7 +4,11 @@ function resolveRelative(basePath, href) {
   const h = String(href || "").trim();
   if (!h) return h;
   if (/^(https?:)?\/\//i.test(h)) return h;
-  if (h.startsWith("/")) return h;
+  // Treat leading "/" as app-root relative (works on GitHub Pages subpaths like /repo/)
+  if (h.startsWith("/")) {
+    const appRoot = new URL(".", location.href);
+    return new URL(h.slice(1), appRoot).toString();
+  }
   const base = new URL(basePath, location.href);
   return new URL(h, base).toString();
 }
@@ -26,7 +30,7 @@ export function simpleMarkdownToHtml(md, basePath = "./modules/") {
     let out = escapeHtml(s);
     out = out.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m, alt, src) => {
       const resolved = resolveRelative(basePath, src);
-      return `<img alt="${escapeHtml(alt)}" src="${escapeHtml(resolved)}" />`;
+      return `<img alt="${escapeHtml(alt)}" src="${escapeHtml(resolved)}" loading="lazy" decoding="async" />`;
     });
     out = out.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text, href) => {
       const resolved = resolveRelative(basePath, href);

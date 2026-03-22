@@ -11,7 +11,7 @@ In surveying, horizontal curves are used to provide a gradual change in directio
 - Spiral (Transition) Curve: A curve with a varying radius used to provide a smooth transition between a straight tangent and a circular curve, or between two circular curves. 
 
 ## Formulas for Circular Curves
-![Circular Simple Curve](/images/circular-simple-curve.png)
+![Circular Simple Curve](../images/circular-simple-curve.png)
 
 ### Length of tangent, T
 Length of tangent (also referred to as subtangent) is the distance from PC to PI. It is the same distance from PI to PT.

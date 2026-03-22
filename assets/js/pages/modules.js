@@ -2,6 +2,20 @@ import { $, $$, escapeHtml } from "../core/dom.js";
 import { typesetMath } from "../core/mathjax.js";
 import { simpleMarkdownToHtml } from "../core/markdown.js";
 
+function ensureModuleWrapStyles() {
+  if (document.querySelector("style[data-module-wrap=\'1\']")) return;
+  const st = document.createElement("style");
+  st.setAttribute("data-module-wrap", "1");
+  st.textContent = `
+  /* Prevent long reference URLs from forcing horizontal scroll on mobile */
+  .modulecontent, #moduleContent { overflow-wrap: anywhere; }
+  .modulecontent p, .modulecontent li, #moduleContent p, #moduleContent li { overflow-wrap: anywhere; }
+  .modulecontent a, #moduleContent a { overflow-wrap: anywhere; word-break: break-word; }
+  .modulecontent code, #moduleContent code { word-break: break-word; }
+  `;
+  document.head.appendChild(st);
+}
+
 async function loadModulesIndex() {
   try {
     const res = await fetch("./modules/index.json", { cache: "no-store" });
@@ -70,6 +84,7 @@ async function openModule(file, title) {
 }
 
 export function initModulesPage() {
+  ensureModuleWrapStyles();
   renderModulesList();
 
   const modulesRefreshBtn = $("#modulesRefreshBtn");
