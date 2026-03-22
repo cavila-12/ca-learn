@@ -1,10 +1,10 @@
 {
   "modules": [
     {
-      "id": "sample",
-      "title": "Sample Module (Algebra)",
-      "description": "Example markdown module with formulas.",
-      "file": "modules/sample.md"
+      "id": "simple curves",
+      "title": "Simple Curves Module --IN PROGRESS--",
+      "description": "Module on simple curves. Major Reference: Mathalino.com",
+      "file": "modules/simple-curves.md"
     },
     {
       "id": "TEST",
