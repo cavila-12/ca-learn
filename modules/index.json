@@ -7,10 +7,10 @@
       "file": "modules/simple-curves.md"
     },
     {
-      "id": "TEST",
-      "title": "Test Module (Algebra)",
-      "description": "Example markdown module with formulas.",
-      "file": "modules/test.md"
+      "id": "Steel Design",
+      "title": "Steel Design: Flexural Strength --IN PROGRESS--",
+      "description": "Module on steel design, focusing on flexural strength.",
+      "file": "modules/steel-design-flexural-strength.md"
     }
   ]
 }
