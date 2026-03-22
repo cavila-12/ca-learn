@@ -166,7 +166,6 @@ function setupQuizRunLayout() {
   settingsPanel.appendChild(shuffleField);
 
   // Always hide the legacy toolbar controls (we keep them only as state holders).
-  if (toolbar) toolbar.style.display = "none";
 
 
   const restartBtn = $("#quizRestartBtn");
@@ -183,16 +182,34 @@ function setupQuizRunLayout() {
     settingsPanel.hidden = !settingsPanel.hidden;
   });
 
+  if (!run.dataset.quizSettingsOutsideClose) {
+    run.dataset.quizSettingsOutsideClose = "1";
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      const btn = $("#quizSettingsBtn");
+      const panel = $("#quizSettingsPanel");
+      if (!panel || panel.hidden) return;
+      if (btn && (btn === t || btn.contains(t))) return;
+      if (panel === t || panel.contains(t)) return;
+      panel.hidden = true;
+    });
+  }
+
   if (restartBtn) actions.appendChild(restartBtn);
   if (backBtn) actions.appendChild(backBtn);
   actions.appendChild(settingsBtn);
 
-  if (toolbar) toolbar.style.display = "none";
+  if (toolbar) toolbar.remove();
 
   const flipBtn = $("#flipBtn");
   if (flipBtn) flipBtn.remove();
 
-  quizHead.append(top, bottom, settingsPanel);
+  settingsPanel.hidden = true;
+
+  // Put settings dropdown in the actions area so it overlays (does not push content down)
+  actions.appendChild(settingsPanel);
+
+  quizHead.append(top, bottom);
   run.insertBefore(quizHead, stage);
 
     run.dataset.layoutReady = "1";
@@ -533,8 +550,8 @@ export function initQuizPage() {
 
   const session = loadSession();
   if (session?.v === 1) {
-    const filter = $("#quizFilterSelect");
-    const shuffle = $("#quizShuffle");
+    const filter = $("#quizFilterSelect2") || $("#quizFilterSelect");
+    const shuffle = $("#quizShuffle2") || $("#quizShuffle");
     if (filter) filter.value = session.filter || "ALL";
     if (shuffle) shuffle.checked = Boolean(session.shuffle);
   }

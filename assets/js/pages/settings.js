@@ -85,11 +85,27 @@ function ensureSwProgressUi() {
   };
 }
 
+
+async function pollSwCacheProgress({ showWhenFound = true } = {}) {
+  try {
+    if (typeof caches === "undefined") return null;
+    const cache = await caches.open("cele-reviewer-progress");
+    const res = await cache.match("./__sw_progress.json");
+    if (!res) return null;
+    const data = await res.json();
+    if (showWhenFound && data && typeof data.total === "number") return data;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 export function initSettingsPage() {
   const v = $("#appVersion");
   const progressUi = ensureSwProgressUi();
   let lastTotal = 0;
   let hideTimer = null;
+  let progressPollTimer = null;
   function showProgress(done, total, label) {
     if (!progressUi) return;
     progressUi.wrap.hidden = false;
@@ -103,7 +119,7 @@ export function initSettingsPage() {
     if (hideTimer) clearTimeout(hideTimer);
     hideTimer = setTimeout(() => {
       progressUi.wrap.hidden = true;
-    }, 800);
+    }, 2500);
   }
 
   if (navigator.serviceWorker) {
@@ -124,6 +140,28 @@ export function initSettingsPage() {
         showProgress(total, total, "Offline resources ready.");
         hideProgressSoon();
       }
+    });
+  }
+
+  // Poll cached SW progress so the bar works even if messages were missed.
+  if (progressUi && typeof caches !== "undefined") {
+    const tick = async () => {
+      const data = await pollSwCacheProgress();
+      if (!data) return;
+      const total = Number(data.total) || 0;
+      const done = Number(data.done) || 0;
+      if (data.state === "done") {
+        showProgress(total, total, "Offline resources ready.");
+        hideProgressSoon();
+      } else if (total) {
+        showProgress(done, total, "Downloading offline resources?");
+      }
+    };
+
+    tick();
+    progressPollTimer = setInterval(tick, 350);
+    window.addEventListener("beforeunload", () => {
+      try { if (progressPollTimer) clearInterval(progressPollTimer); } catch {}
     });
   }
 

@@ -1,5 +1,16 @@
 /* Service Worker: offline-first app shell */
-const CACHE_NAME = "cele-reviewer-cache-v11";
+const CACHE_NAME = "cele-reviewer-cache-v13";
+const PROGRESS_CACHE = "cele-reviewer-progress";
+const PROGRESS_KEY = "./__sw_progress.json";
+
+async function writeSwProgress(data) {
+  try {
+    const cache = await caches.open(PROGRESS_CACHE);
+    const payload = JSON.stringify({ t: Date.now(), ...data });
+    await cache.put(PROGRESS_KEY, new Response(payload, { headers: { "Content-Type": "application/json" } }));
+  } catch {}
+}
+
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,6 +20,7 @@ const APP_SHELL = [
   "./settings.html",
   "./assets/css/styles.css",
   "./assets/css/decks.css",
+  "./assets/css/quiz.css",
   "./app.js",
   "./assets/js/main.js",
   "./assets/js/core/constants.js",
@@ -62,6 +74,7 @@ self.addEventListener("install", (event) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME);
       const total = APP_SHELL.length;
+      await writeSwProgress({ state: "start", done: 0, total });
       await broadcastSwMessage({ type: "SW_CACHE_START", total });
 
       let done = 0;
@@ -71,9 +84,11 @@ self.addEventListener("install", (event) => {
         if (!res.ok) throw new Error(`Failed to cache: ${url}`);
         await cache.put(req, res.clone());
         done += 1;
+        await writeSwProgress({ state: "progress", done, total, url });
         await broadcastSwMessage({ type: "SW_CACHE_PROGRESS", done, total, url });
       }
 
+      await writeSwProgress({ state: "done", done: total, total });
       await broadcastSwMessage({ type: "SW_CACHE_DONE", total });
       self.skipWaiting();
     })()
