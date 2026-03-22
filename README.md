@@ -23,10 +23,3 @@ Push to a repo and enable Pages for the branch/root.
 
 ## Offline note
 The app caches all same-origin files on first run. MathJax is loaded from jsDelivr and is cached by the service worker after the first successful online load.
-
-## MathJax troubleshooting (formula cards show as text)
-- The app loads MathJax from a CDN (`cdn.jsdelivr.net`). You must be online (or have the service worker cache already populated) for formulas to render.
-- If you previously disabled PWA/SW features, MathJax will not be cached and requires internet on every reload.
-- When running via VS Code Go Live, open DevTools Console and check `MathJax?.typesetPromise`:
-  - `undefined` usually means the CDN script didn’t load (blocked/no internet).
-  - If it exists but formulas still don’t render, hard-reload and clear site data (localStorage/service worker cache).

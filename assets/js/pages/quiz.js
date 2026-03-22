@@ -16,6 +16,191 @@ let quizState = {
   flashFlipped: false
 };
 
+let mcqAutoNextTimer = null;
+
+function clearMcqAutoNext() {
+  if (mcqAutoNextTimer) {
+    clearTimeout(mcqAutoNextTimer);
+    mcqAutoNextTimer = null;
+  }
+}
+
+
+const mcqSounds = {
+  correct: null,
+  wrong: null
+};
+
+function getMcqSound(name) {
+  const existing = mcqSounds[name];
+  if (existing) return existing;
+  const audio = new Audio(`./sounds/${name}.mp3`);
+  audio.preload = "auto";
+  audio.volume = 0.7;
+  mcqSounds[name] = audio;
+  return audio;
+}
+
+function playMcqSound(isCorrect) {
+  try {
+    const a = getMcqSound(isCorrect ? "correct" : "wrong");
+    a.currentTime = 0;
+    const p = a.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  } catch {}
+}
+function ensureQuizCssLoaded() {
+  if (document.querySelector("link[data-quiz-css=\'1\']")) return;
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "./assets/css/quiz.css";
+  link.setAttribute("data-quiz-css", "1");
+  document.head.appendChild(link);
+}
+
+function ensureQuizUiHidesLegacyToolbar() {
+  if (document.querySelector("style[data-quiz-hide-toolbar=\'1\']")) return;
+  const st = document.createElement("style");
+  st.setAttribute("data-quiz-hide-toolbar", "1");
+  st.textContent = `#quizRunView .toolbar{display:none !important;}`;
+  document.head.appendChild(st);
+}
+
+function setAsIconButton(btn, iconClass, label) {
+  if (!btn) return;
+  btn.className = "iconaction";
+  btn.type = "button";
+  btn.setAttribute("aria-label", label);
+  btn.title = label;
+  btn.innerHTML = `<span class="icon ${iconClass}" aria-hidden="true"></span>`;
+}
+
+function setupQuizRunLayout() {
+  const run = $("#quizRunView");
+  if (!run) return;
+  if (run.dataset.layoutReady === "1") return;
+  try {
+    const stage = $("#quizStage");
+  if (!stage) return;
+
+  const oldHead = run.querySelector(".pagehead");
+  const toolbar = run.querySelector(".toolbar");
+
+  const quizHead = document.createElement("div");
+  quizHead.className = "quizhead";
+
+  const top = document.createElement("div");
+  top.className = "quizhead__top";
+  const title = document.createElement("div");
+  title.className = "quizhead__title";
+  title.textContent = "Quiz";
+  const actions = document.createElement("div");
+  actions.className = "quizhead__actions";
+  top.append(title, actions);
+
+  const bottom = document.createElement("div");
+  bottom.className = "quizhead__bottom";
+
+  const settingsPanel = document.createElement("div");
+  settingsPanel.className = "quizsettings";
+  settingsPanel.id = "quizSettingsPanel";
+  settingsPanel.hidden = true;
+
+  if (oldHead) {
+    const left = oldHead.children[0];
+    const right = oldHead.querySelector(".pagehead__right");
+    if (left) {
+      left.className = "quizhead__deck";
+      const deckTitle = $("#quizDeckTitle");
+      if (deckTitle) deckTitle.classList.add("quizhead__deckTitle");
+      bottom.appendChild(left);
+    }
+    if (right) {
+      right.classList.add("quizhead__stats");
+      bottom.appendChild(right);
+    }
+    oldHead.remove();
+  }
+
+  // Settings list (Filter + Shuffle) shown only when Settings is toggled
+  const filterSelectLegacy = $("#quizFilterSelect");
+  const shuffleLegacy = $("#quizShuffle");
+
+  const filterField = document.createElement("label");
+  filterField.className = "field";
+  filterField.innerHTML = `
+    <span>Filter</span>
+    <select id="quizFilterSelect2">
+      <option value="ALL">All types</option>
+      <option value="MCQ">MCQ only</option>
+      <option value="FLASHCARD">Flashcards only</option>
+      <option value="FORMULA">Formulas only</option>
+    </select>
+  `;
+  const filterSelect = filterField.querySelector("select");
+  if (filterSelectLegacy && filterSelect) filterSelect.value = filterSelectLegacy.value || "ALL";
+
+  const shuffleField = document.createElement("label");
+  shuffleField.className = "check";
+  shuffleField.innerHTML = `
+    <input type="checkbox" id="quizShuffle2" />
+    <span>Shuffle</span>
+  `;
+  const shuffleCheck = shuffleField.querySelector("input");
+  if (shuffleLegacy && shuffleCheck) shuffleCheck.checked = Boolean(shuffleLegacy.checked);
+
+  if (filterSelect) {
+    filterSelect.addEventListener("change", () => {
+      if (filterSelectLegacy) filterSelectLegacy.value = filterSelect.value;
+      quizRestart();
+    });
+  }
+  if (shuffleCheck) {
+    shuffleCheck.addEventListener("change", () => {
+      if (shuffleLegacy) shuffleLegacy.checked = Boolean(shuffleCheck.checked);
+      quizRestart();
+    });
+  }
+
+  settingsPanel.appendChild(filterField);
+  settingsPanel.appendChild(shuffleField);
+
+  // Always hide the legacy toolbar controls (we keep them only as state holders).
+  if (toolbar) toolbar.style.display = "none";
+
+
+  const restartBtn = $("#quizRestartBtn");
+  const backBtn = $("#quizBackBtn");
+  setAsIconButton(restartBtn, "icon--restart", "Restart");
+  setAsIconButton(backBtn, "icon--deck", "Change deck");
+
+  const settingsBtn = document.createElement("button");
+  settingsBtn.id = "quizSettingsBtn";
+  setAsIconButton(settingsBtn, "icon--settings", "Settings");
+  settingsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    settingsPanel.hidden = !settingsPanel.hidden;
+  });
+
+  if (restartBtn) actions.appendChild(restartBtn);
+  if (backBtn) actions.appendChild(backBtn);
+  actions.appendChild(settingsBtn);
+
+  if (toolbar) toolbar.style.display = "none";
+
+  const flipBtn = $("#flipBtn");
+  if (flipBtn) flipBtn.remove();
+
+  quizHead.append(top, bottom, settingsPanel);
+  run.insertBefore(quizHead, stage);
+
+    run.dataset.layoutReady = "1";
+  } catch (e) {
+    console.error("Quiz layout setup failed", e);
+  }
+}
+
 function buildQuizOrder(deck, filter, shuffle) {
   let cards = Array.isArray(deck.cards) ? deck.cards : [];
   if (filter !== "ALL") cards = cards.filter((c) => c.type === filter);
@@ -78,6 +263,9 @@ function showQuizRunView(deck) {
   const meta = $("#quizDeckMeta");
   if (title) title.textContent = deck?.name || "Deck";
   if (meta) meta.textContent = deck ? deckMetaLine(deck) : "";
+
+  // (Re)apply the simplified header/settings layout
+  setupQuizRunLayout();
 }
 
 function startQuizWithDeck(deckId) {
@@ -93,6 +281,7 @@ function startQuizWithDeck(deckId) {
 }
 
 function quizRestart() {
+  clearMcqAutoNext();
   const stage = $("#quizStage");
   if (!stage) return;
 
@@ -108,8 +297,10 @@ function quizRestart() {
   }
 
   quizState.deckId = deck.id;
-  quizState.filter = $("#quizFilterSelect").value;
-  quizState.shuffle = $("#quizShuffle").checked;
+    const filterEl = $("#quizFilterSelect2") || $("#quizFilterSelect");
+  const shuffleEl = $("#quizShuffle2") || $("#quizShuffle");
+  quizState.filter = filterEl ? filterEl.value : "ALL";
+  quizState.shuffle = shuffleEl ? Boolean(shuffleEl.checked) : false;
   quizState.order = buildQuizOrder(deck, quizState.filter, quizState.shuffle);
   quizState.index = 0;
   quizState.score = 0;
@@ -145,7 +336,6 @@ function renderQuiz() {
   if (quizState.order.length === 0) {
     stage.innerHTML = `<div class="muted">No cards match the current filter.</div>`;
     setQuizHeader();
-    $("#flipBtn").hidden = true;
     return;
   }
 
@@ -161,14 +351,12 @@ function renderQuiz() {
   $("#nextBtn").disabled = quizState.index === quizState.order.length - 1;
 
   if (card.type === CardType.MCQ) {
-    $("#flipBtn").hidden = true;
     stage.innerHTML = renderMcq(card);
     wireMcq(card);
   } else if (card.type === CardType.FLASHCARD) {
-    $("#flipBtn").hidden = false;
     stage.innerHTML = renderFlash(card, quizState.flashFlipped);
+    wireFlashcard();
   } else if (card.type === CardType.FORMULA) {
-    $("#flipBtn").hidden = true;
     stage.innerHTML = renderFormula(card);
   }
 
@@ -224,11 +412,24 @@ function wireMcq(card) {
     const b = buttons[i];
     b.addEventListener("click", () => {
       if (quizState.answered[card.id]) return;
+      clearMcqAutoNext();
       const idx = Number.parseInt(String(b.getAttribute("data-index") || "-1"), 10);
       const correct = idx === correctIndex;
+      playMcqSound(correct);
       quizState.answered[card.id] = { selectedIndex: idx, correct, scored: correct };
       if (correct) quizState.score += 1;
       renderQuiz();
+      // Auto-next (MCQ only): advance 1s after answering, if still on same card.
+      const answeredCardId = card.id;
+      const answeredIndex = quizState.index;
+      mcqAutoNextTimer = setTimeout(() => {
+        mcqAutoNextTimer = null;
+        const current = getQuizCard();
+        if (!current || current.id !== answeredCardId) return;
+        if (quizState.index !== answeredIndex) return;
+        if (quizState.index >= quizState.order.length - 1) return;
+        quizNext();
+      }, 1000);
     });
   }
 }
@@ -240,11 +441,11 @@ function renderFlash(card, flipped) {
   return `
     <div class="flashwrap">
       <div class="badge badge--flash">FLASHCARD</div>
-      <div class="flashcard ${flippedClass}" id="flashcard">
+      <div class="flashcard ${flippedClass}" id="flashcard" role="button" tabindex="0" aria-label="Flip card">
         <div class="flashface">
           <div class="flashlabel">Front</div>
           <div class="flashtext">${escapeHtml(front)}</div>
-          <div class="muted small">Tap Flip to reveal.</div>
+          <div class="muted small">Tap the card to reveal.</div>
         </div>
         <div class="flashface flashface--back">
           <div class="flashlabel">Back</div>
@@ -253,6 +454,18 @@ function renderFlash(card, flipped) {
       </div>
     </div>
   `;
+}
+
+function wireFlashcard() {
+  const el = $("#flashcard");
+  if (!el) return;
+  el.addEventListener("click", () => quizFlip());
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      quizFlip();
+    }
+  });
 }
 
 function renderFormula(card) {
@@ -293,16 +506,19 @@ function renderFormulaDef(def) {
 }
 
 function quizPrev() {
+  clearMcqAutoNext();
   quizState.index = clamp(quizState.index - 1, 0, quizState.order.length - 1);
   quizState.flashFlipped = false;
   renderQuiz();
 }
 function quizNext() {
+  clearMcqAutoNext();
   quizState.index = clamp(quizState.index + 1, 0, quizState.order.length - 1);
   quizState.flashFlipped = false;
   renderQuiz();
 }
 function quizFlip() {
+  clearMcqAutoNext();
   const card = getQuizCard();
   if (!card || card.type !== CardType.FLASHCARD) return;
   quizState.flashFlipped = !quizState.flashFlipped;
@@ -310,6 +526,11 @@ function quizFlip() {
 }
 
 export function initQuizPage() {
+  window.__QUIZ_UI_VERSION = "2026-03-22-settings-popover";
+  ensureQuizCssLoaded();
+  ensureQuizUiHidesLegacyToolbar();
+  setupQuizRunLayout();
+
   const session = loadSession();
   if (session?.v === 1) {
     const filter = $("#quizFilterSelect");
@@ -349,7 +570,5 @@ export function initQuizPage() {
   if (prevBtn) prevBtn.addEventListener("click", quizPrev);
   const nextBtn = $("#nextBtn");
   if (nextBtn) nextBtn.addEventListener("click", quizNext);
-  const flipBtn = $("#flipBtn");
-  if (flipBtn) flipBtn.addEventListener("click", quizFlip);
 }
 

@@ -22,8 +22,111 @@ async function refreshSwStatus() {
   }
 }
 
+async function resetOfflineCache() {
+  if (!confirm("Clear offline cache and unregister the service worker? The app will reload.")) return;
+
+  try {
+    if (typeof caches !== "undefined") {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+    }
+  } catch {}
+
+  try {
+    const reg = await getServiceWorkerRegistration();
+    if (reg) await reg.unregister();
+  } catch {}
+
+  toast("Offline cache cleared. Reloading?");
+  location.reload();
+}
+
+
+
+function ensureSwProgressUi() {
+  const updatesCard = Array.from(document.querySelectorAll(".card")).find((c) => c.querySelector("#checkUpdatesBtn"));
+  if (!updatesCard) return null;
+  if (!document.querySelector("style[data-sw-progress=\'1\']")) {
+    const st = document.createElement("style");
+    st.setAttribute("data-sw-progress", "1");
+    st.textContent = `
+.swprogress{margin-top:10px}
+.swprogress__row{display:flex;align-items:center;gap:10px}
+.swprogress__bar{flex:1;height:10px;border-radius:999px;background:var(--surface3);border:1px solid var(--line);overflow:hidden}
+.swprogress__fill{height:100%;width:0%;background:var(--accent);transition:width .12s linear}
+.swprogress__pct{min-width:48px;text-align:right;font-variant-numeric:tabular-nums}
+`;
+    document.head.appendChild(st);
+  }
+  let wrap = document.querySelector("#swProgress");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.id = "swProgress";
+    wrap.className = "swprogress";
+    wrap.hidden = true;
+    wrap.innerHTML = `
+      <div class="muted small" id="swProgressLabel">Downloading offline resources?</div>
+      <div class="swprogress__row" style="margin-top:6px">
+        <div class="swprogress__bar" aria-label="Service worker download progress">
+          <div class="swprogress__fill" id="swProgressFill"></div>
+        </div>
+        <div class="muted small swprogress__pct" id="swProgressPct">0%</div>
+      </div>
+    `;
+    const statusEl = updatesCard.querySelector("#updateStatus");
+    if (statusEl && statusEl.parentNode) statusEl.parentNode.insertBefore(wrap, statusEl.nextSibling);
+    else updatesCard.appendChild(wrap);
+  }
+  return {
+    wrap,
+    label: document.querySelector("#swProgressLabel"),
+    fill: document.querySelector("#swProgressFill"),
+    pct: document.querySelector("#swProgressPct")
+  };
+}
+
 export function initSettingsPage() {
   const v = $("#appVersion");
+  const progressUi = ensureSwProgressUi();
+  let lastTotal = 0;
+  let hideTimer = null;
+  function showProgress(done, total, label) {
+    if (!progressUi) return;
+    progressUi.wrap.hidden = false;
+    if (progressUi.label && label) progressUi.label.textContent = label;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    if (progressUi.fill) progressUi.fill.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+    if (progressUi.pct) progressUi.pct.textContent = `${pct}%`;
+  }
+  function hideProgressSoon() {
+    if (!progressUi) return;
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      progressUi.wrap.hidden = true;
+    }, 800);
+  }
+
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.addEventListener("message", (event) => {
+      const data = event?.data || {};
+      if (data.type === "SW_CACHE_START") {
+        lastTotal = Number(data.total) || 0;
+        showProgress(0, lastTotal, "Downloading offline resources?");
+      }
+      if (data.type === "SW_CACHE_PROGRESS") {
+        const total = Number(data.total) || lastTotal || 0;
+        const done = Number(data.done) || 0;
+        lastTotal = total;
+        showProgress(done, total, data.label || "Downloading offline resources?");
+      }
+      if (data.type === "SW_CACHE_DONE") {
+        const total = Number(data.total) || lastTotal || 0;
+        showProgress(total, total, "Offline resources ready.");
+        hideProgressSoon();
+      }
+    });
+  }
+
   if (v) v.textContent = APP_VERSION;
   refreshSwStatus();
 
@@ -71,6 +174,16 @@ export function initSettingsPage() {
 
   const reloadBtn = $("#reloadBtn");
   if (reloadBtn) reloadBtn.addEventListener("click", () => location.reload());
+
+  const updateToolbar = reloadBtn ? reloadBtn.closest(".toolbar") : null;
+  if (updateToolbar && !$("#resetCacheBtn")) {
+    const btn = document.createElement("button");
+    btn.className = "danger";
+    btn.id = "resetCacheBtn";
+    btn.textContent = "Reset offline cache";
+    btn.addEventListener("click", () => resetOfflineCache());
+    updateToolbar.appendChild(btn);
+  }
 
   const resetBtn = $("#resetDataBtn");
   if (resetBtn) {

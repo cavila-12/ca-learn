@@ -1,0 +1,110 @@
+﻿/* Quiz page layout tweaks */
+
+.quizhead{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  margin: 6px 2px 12px;
+}
+
+.quizhead__top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+.quizhead__title{
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.quizhead__actions{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+}
+
+.iconaction{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconaction:hover{ background: var(--surface3); }
+
+.icon{
+  width: 20px;
+  height: 20px;
+  background: var(--text);
+  display:inline-block;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.icon--restart{
+  mask-image: url("../../icons/restart.svg");
+  -webkit-mask-image: url("../../icons/restart.svg");
+}
+
+.icon--deck{
+  mask-image: url("../../icons/deck.svg");
+  -webkit-mask-image: url("../../icons/deck.svg");
+}
+
+.icon--settings{
+  mask-image: url("../../icons/settings.svg");
+  -webkit-mask-image: url("../../icons/settings.svg");
+}
+
+.quizhead__bottom{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap: wrap;
+}
+
+.quizhead__deck{
+  min-width: 220px;
+  flex: 1;
+}
+
+.quizhead__deckTitle{
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.quizhead__stats{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content:flex-end;
+}
+
+.quizsettings{
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin: 0 2px 12px;
+  padding: 10px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius2);
+  background: var(--surface2);
+}
+
+.quizsettings .toolbar{ margin-bottom: 0; }

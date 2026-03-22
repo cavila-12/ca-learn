@@ -1,5 +1,5 @@
 /* Service Worker: offline-first app shell */
-const CACHE_NAME = "cele-reviewer-cache-v9";
+const CACHE_NAME = "cele-reviewer-cache-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -31,18 +31,50 @@ const APP_SHELL = [
   "./assets/js/ui/drawer.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
+  "./icons/deck.svg",
+  "./icons/restart.svg",
+  "./icons/settings.svg",
+  "./sounds/correct.mp3",
+  "./sounds/wrong.mp3",
   "./data/decks/index.json",
   "./data/decks/sample.csv",
   "./data/decks/psad-formula.csv",
+  "./data/decks/hpge-formula.csv",
+  "./data/decks/surveying-formula.csv",
+  "./data/decks/transportation-formula.csv",
+  "./data/decks/mstc-terms.csv",
+  "./data/decks/psad-terms.csv",
+  "./data/decks/hpge-terms.csv",
+  "./data/decks/basic-math-formula.csv",
   "./modules/index.json",
   "./modules/sample.md"
 ];
+
+async function broadcastSwMessage(msg) {
+  try {
+    const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    for (const c of clients) c.postMessage(msg);
+  } catch {}
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      await cache.addAll(APP_SHELL);
+      const total = APP_SHELL.length;
+      await broadcastSwMessage({ type: "SW_CACHE_START", total });
+
+      let done = 0;
+      for (const url of APP_SHELL) {
+        const req = new Request(url, { cache: "reload" });
+        const res = await fetch(req);
+        if (!res.ok) throw new Error(`Failed to cache: ${url}`);
+        await cache.put(req, res.clone());
+        done += 1;
+        await broadcastSwMessage({ type: "SW_CACHE_PROGRESS", done, total, url });
+      }
+
+      await broadcastSwMessage({ type: "SW_CACHE_DONE", total });
       self.skipWaiting();
     })()
   );
