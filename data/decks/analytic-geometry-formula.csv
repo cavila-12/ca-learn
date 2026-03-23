@@ -1,0 +1,9 @@
+Type,Question,Choice1,Choice2,Choice3,Choice4,Answer,OptionalDefs
+FORMULA,Distance Formula,"d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}","d = Distance; (x_1, y_1) = Coordinates of the first point; (x_2, y_2) = Coordinates of the second point"
+FORMULA,Distance from a point to a line,"d = \frac{|Ax_0 + By_0 + C|}{\sqrt{A^2 + B^2}}","d = Distance; (x_0, y_0) = Coordinates of the point; Ax + By + C = Equation of the line"
+FORMULA,Distance between two parallel lines,"d = \frac{|C_1 - C_2|}{\sqrt{A^2 + B^2}}","d = Distance; Ax + By + C_1 = Equation of the first line; Ax + By + C_2 = Equation of the second line"
+FORMULA,Angle between 2 slopes,"\theta = \arctan \left( \frac{m_2 - m_1}{1 + m_1 m_2} \right)","\theta = Angle between the two lines; m_1, m_2 = Slopes of the two lines"
+FORMULA,Midpoint Formula,"M = \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)","M = Midpoint; (x_1, y_1) = Coordinates of the first point; (x_2, y_2) = Coordinates of the second point"
+FORMULA,Slope Formula,"m = \frac{y_2 - y_1}{x_2 - x_1}","m = Slope; (x_1, y_1) = Coordinates of the first point; (x_2, y_2) = Coordinates of the second point"
+FORMULA,Point-Slope Form,"y - y_1 = m(x - x_1)","(x_1, y_1) = Coordinates of the point; m = Slope of the line"
+FORMULA,Slope-Intercept Form,"y = mx + b","m = Slope of the line; b = y-intercept"

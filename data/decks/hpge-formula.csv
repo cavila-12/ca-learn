@@ -15,7 +15,7 @@ FORMULA,Hydrostatic Force,"F = \gamma \bar{h} A","\F = Hydrostatic Force; \gamma
 FORMULA,Eccentricity,"e = \frac{I_g \cdot \gamma \cdot \cos \theta}{F}","e = Eccentricity; I_g = Second moment of area about the centroidal axis; \gamma = Unit weight of the fluid; \theta = Angle of inclination; F = Hydrostatic Force"
 FORMULA,Factor of Safety (Overturning),"FS_o = \frac{RM}{OM}","FS_o = Factor of safety; RM = Resisting moment; OM = Overturning moment"
 FORMULA,Factor of Safety (Sliding),"FS_s = \frac{\mu \cdot R_y}{R_x}","FS_s = Factor of safety; \mu = Coefficient of friction; R_y = Resisting Force; R_x Sliding Force"
-FORMULA,Location of Force(\bar{x}),"\bar{x} = \frac{RM - OM}{R_y}"
+FORMULA,Location of Force ($$\bar{x}$$),"\bar{x} = \frac{RM - OM}{R_y}"
 FORMULA,Base Pressure(e < B/6),"P_{max} = \frac{R_y}{B} \left( 1 + \frac{6e}{B} \right)","P_{max} = Maximum base pressure; R_y = Total load; e = Eccentricity; B = Width of the base"
 FORMULA,Base Pressure(e < B/6),"P_{min} = \frac{R_y}{B} \left( 1 - \frac{6e}{B} \right)","P_{min} = Minimum base pressure; R_y = Total load; e = Eccentricity; B = Width of the base"
 FORMULA,Base Pressure(e > B/6),"P_{max} = \frac{2 \cdot R_y}{3 \cdot \bar{x}}","P_{max} = Maximum base pressure; R_y = Resisting Force; \bar{x} = Distance from the edge of the base to the center of pressure"

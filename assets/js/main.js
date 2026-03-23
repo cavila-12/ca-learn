@@ -1,5 +1,6 @@
 ﻿import { syncThemeColorMeta } from "./core/theme.js";
 import { setOnlineStatusTag, registerServiceWorker, wireInstallPrompt } from "./core/pwa.js";
+import { wireSwUpdatePrompt } from "./core/updatePrompt.js";
 import { wireDrawerUI } from "./ui/drawer.js";
 import { loadDefaultDecksIfNeeded } from "./core/defaults.js";
 import { page } from "./core/page.js";
@@ -14,6 +15,7 @@ async function main() {
   wireInstallPrompt();
   wireDrawerUI();
   await registerServiceWorker();
+  wireSwUpdatePrompt();
   await loadDefaultDecksIfNeeded();
 
   if (page() === "decks") initDecksPage();
@@ -23,5 +25,3 @@ async function main() {
 }
 
 main();
-
-

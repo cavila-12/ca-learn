@@ -13,6 +13,83 @@ function resolveRelative(basePath, href) {
   return new URL(h, base).toString();
 }
 
+let mdItInstance = null;
+let mdItLoadPromise = null;
+
+function loadScriptOnce(src) {
+  const existing = document.querySelector(`script[data-src="${src}"]`);
+  if (existing) {
+    if (existing.dataset.loaded === "1") return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Script load failed")), { once: true });
+    });
+  }
+  return new Promise((resolve, reject) => {
+    const el = document.createElement("script");
+    el.src = src;
+    el.defer = true;
+    el.dataset.src = src;
+    el.addEventListener("load", () => { el.dataset.loaded = "1"; resolve(); }, { once: true });
+    el.addEventListener("error", () => reject(new Error(`Failed to load ${src}`)), { once: true });
+    document.head.appendChild(el);
+  });
+}
+
+async function ensureMarkdownIt() {
+  if (typeof document === "undefined") return null;
+  if (mdItInstance) return mdItInstance;
+  if (mdItLoadPromise) return mdItLoadPromise;
+
+  mdItLoadPromise = (async () => {
+    // Local vendor file (cached by SW after first load)
+    await loadScriptOnce("./libraries/markdown-it.min.js");
+    const markdownit = window.markdownit;
+    if (typeof markdownit !== "function") throw new Error("markdown-it not available");
+
+    const md = markdownit({
+      html: false,
+      linkify: true,
+      breaks: false
+    });
+
+    const defaultLinkOpen = md.renderer.rules.link_open || ((tokens, i, opts, env, self) => self.renderToken(tokens, i, opts));
+    md.renderer.rules.link_open = (tokens, i, opts, env, self) => {
+      const token = tokens[i];
+      const href = token.attrGet("href");
+      if (href) token.attrSet("href", resolveRelative(env?.basePath || "./", href));
+      token.attrSet("target", "_blank");
+      token.attrSet("rel", "noopener noreferrer");
+      return defaultLinkOpen(tokens, i, opts, env, self);
+    };
+
+    const defaultImage = md.renderer.rules.image || ((tokens, i, opts, env, self) => self.renderToken(tokens, i, opts));
+    md.renderer.rules.image = (tokens, i, opts, env, self) => {
+      const token = tokens[i];
+      const src = token.attrGet("src");
+      if (src) token.attrSet("src", resolveRelative(env?.basePath || "./", src));
+      token.attrSet("loading", "lazy");
+      token.attrSet("decoding", "async");
+      return defaultImage(tokens, i, opts, env, self);
+    };
+
+    mdItInstance = md;
+    return mdItInstance;
+  })().catch((e) => {
+    console.warn("markdown-it load failed; falling back to simple parser", e);
+    mdItLoadPromise = null;
+    return null;
+  });
+
+  return mdItLoadPromise;
+}
+
+export async function markdownToHtml(md, basePath = "./modules/") {
+  const engine = await ensureMarkdownIt();
+  if (!engine) return simpleMarkdownToHtml(md, basePath);
+  return engine.render(String(md ?? ""), { basePath });
+}
+
 export function simpleMarkdownToHtml(md, basePath = "./modules/") {
   const lines = String(md ?? "").replaceAll("\r\n", "\n").split("\n");
   let html = "";

@@ -1,6 +1,6 @@
 import { $, $$, escapeHtml } from "../core/dom.js";
 import { typesetMath } from "../core/mathjax.js";
-import { simpleMarkdownToHtml } from "../core/markdown.js";
+import { markdownToHtml } from "../core/markdown.js";
 
 function ensureModuleWrapStyles() {
   if (document.querySelector("style[data-module-wrap=\'1\']")) return;
@@ -12,6 +12,13 @@ function ensureModuleWrapStyles() {
   .modulecontent p, .modulecontent li, #moduleContent p, #moduleContent li { overflow-wrap: anywhere; }
   .modulecontent a, #moduleContent a { overflow-wrap: anywhere; word-break: break-word; }
   .modulecontent code, #moduleContent code { word-break: break-word; }
+
+  /* Tables (GFM) */
+  .modulecontent table, #moduleContent table { width: 100%; border-collapse: collapse; }
+  .modulecontent th, .modulecontent td, #moduleContent th, #moduleContent td { border: 1px solid var(--line); padding: 8px; vertical-align: top; }
+  .modulecontent th, #moduleContent th { background: var(--surface2); }
+  .modulecontent td, .modulecontent th, #moduleContent td, #moduleContent th { word-break: break-word; overflow-wrap: anywhere; }
+  .modulecontent table, #moduleContent table { display:block; overflow-x:auto; -webkit-overflow-scrolling: touch; }
   `;
   document.head.appendChild(st);
 }
@@ -69,7 +76,7 @@ async function openModule(file, title) {
     if (moduleContent) {
       const base = `./${file}`;
       moduleContent.classList.remove("muted");
-      moduleContent.innerHTML = simpleMarkdownToHtml(md, base);
+      moduleContent.innerHTML = await markdownToHtml(md, base);
       typesetMath(moduleContent);
     }
   } catch {

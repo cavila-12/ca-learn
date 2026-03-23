@@ -381,6 +381,74 @@ function renderQuiz() {
   setQuizHeader();
 }
 
+function mathSpan(math) {
+  const enc = encodeURIComponent(math);
+  return `<span class="js-math" data-math="${escapeHtml(enc)}"></span>`;
+}
+
+function renderPlainTextWithBreaks(raw, newlineMarker = ";") {
+  const s = String(raw ?? "");
+  if (!s) return "";
+  // Treat actual newlines and the marker (default ";") as line breaks.
+  const combined = s.replaceAll("\r\n", "\n").replaceAll("\n", newlineMarker);
+  const parts = combined.split(newlineMarker);
+  return parts.map((p) => escapeHtml(p.trim())).join("<br>");
+}
+
+function renderRichText(raw, { newlineMarker = ";" } = {}) {
+  const input = String(raw ?? "");
+  if (!input) return "";
+
+  /** @type {{type:"text"|"math-inline"|"math-display", value:string}[]} */
+  let tokens = [{ type: "text", value: input }];
+
+  const apply = (re, toToken) => {
+    const next = [];
+    for (const t of tokens) {
+      if (t.type !== "text") {
+        next.push(t);
+        continue;
+      }
+      const str = t.value;
+      let last = 0;
+      for (const m of str.matchAll(re)) {
+        const start = m.index ?? 0;
+        if (start > last) next.push({ type: "text", value: str.slice(last, start) });
+        next.push(toToken(m, str));
+        last = start + m[0].length;
+      }
+      if (last < str.length) next.push({ type: "text", value: str.slice(last) });
+    }
+    tokens = next;
+  };
+
+  // Order matters: display before inline.
+  apply(/\\[(.+?)\\]/gs, (m) => ({ type: "math-display", value: m[1] }));
+  apply(/(?<!\\)\$\$(.+?)(?<!\\)\$\$/gs, (m, str) => {
+    const start = m.index ?? 0;
+    const end = start + m[0].length;
+    const before = str.slice(0, start);
+    const after = str.slice(end);
+    const beforeLine = before.slice(before.lastIndexOf("\n") + 1).trim();
+    const afterLine = after.slice(0, after.indexOf("\n") === -1 ? after.length : after.indexOf("\n")).trim();
+    const isStandaloneLine = beforeLine === "" && afterLine === "";
+    return { type: isStandaloneLine ? "math-display" : "math-inline", value: m[1] };
+  });
+  apply(/\\((.+?)\\)/gs, (m) => ({ type: "math-inline", value: m[1] }));
+  apply(/(?<!\\)\$(.+?)(?<!\\)\$/gs, (m) => ({ type: "math-inline", value: m[1] }));
+
+  const out = [];
+  for (const t of tokens) {
+    if (t.type === "text") {
+      out.push(renderPlainTextWithBreaks(t.value, newlineMarker));
+      continue;
+    }
+    if (t.type === "math-display") out.push(mathSpan(wrapDisplayMath(t.value)));
+    else out.push(mathSpan(wrapInlineMath(t.value)));
+  }
+  return out.join("");
+}
+
 function getMcqCorrectIndex(card) {
   const idx = Number.isInteger(card.answerIndex) ? card.answerIndex : (card.choices || []).indexOf(card.answer);
   return Number.isInteger(idx) && idx >= 0 && idx <= 3 ? idx : -1;
@@ -399,7 +467,7 @@ function renderMcq(card) {
     const cls = ["choicebtn", isCorrect ? "is-correct" : "", isWrong ? "is-wrong" : "", isDisabled ? "is-disabled" : ""]
       .filter(Boolean)
       .join(" ");
-    return `<button class="${cls}" data-index="${i}">${escapeHtml(c)}</button>`;
+    return `<button class="${cls}" data-index="${i}">${renderRichText(c)}</button>`;
   });
 
   const defsList = defs.length ? `<div class="muted small" style="margin-top:10px">Definitions</div><ul class="formula__defs">${defs.map(renderFormulaDef).join("")}</ul>` : "";
@@ -407,12 +475,14 @@ function renderMcq(card) {
   return `
     <div class="quizcard">
       <div class="badge badge--mcq">MCQ</div>
-      <h3>${escapeHtml(card.question || "")}</h3>
+      <h3>${renderRichText(card.question || "")}</h3>
       ${defsList}
       <div class="choices">${choiceBtns.join("")}</div>
       ${
         answered
-          ? `<div class="muted small" style="margin-top:10px">${answered.correct ? "Correct." : "Incorrect."}</div>`
+          ? answered.correct
+            ? `<div class="muted small" style="margin-top:10px">Correct.</div>`
+            : `<div class="muted small" style="margin-top:10px">Incorrect.<br>Correct: <span class="small">${renderRichText((card.choices || [])[correctIndex] || "")}</span></div>`
           : `<div class="muted small" style="margin-top:10px">Pick an answer.</div>`
       }
     </div>
@@ -461,12 +531,12 @@ function renderFlash(card, flipped) {
       <div class="flashcard ${flippedClass}" id="flashcard" role="button" tabindex="0" aria-label="Flip card">
         <div class="flashface">
           <div class="flashlabel">Front</div>
-          <div class="flashtext">${escapeHtml(front)}</div>
+          <div class="flashtext">${renderRichText(front)}</div>
           <div class="muted small">Tap the card to reveal.</div>
         </div>
         <div class="flashface flashface--back">
           <div class="flashlabel">Back</div>
-          <div class="flashtext">${escapeHtml(back)}</div>
+          <div class="flashtext">${renderRichText(back)}</div>
         </div>
       </div>
     </div>
@@ -495,7 +565,7 @@ function renderFormula(card) {
   return `
     <div class="formula">
       <div class="badge badge--formula">FORMULA</div>
-      <div class="formula__name">${escapeHtml(name)}</div>
+      <div class="formula__name">${renderRichText(name)}</div>
       <div class="formula__eq"><span class="js-math" data-math="${escapeHtml(equationEnc)}"></span></div>
       ${defsList}
     </div>
@@ -507,19 +577,15 @@ function renderFormulaDef(def) {
 
   const eqIndex = raw.indexOf("=");
   if (eqIndex === -1) {
-    if (/[\\_^{}]/.test(raw)) {
-      const math = wrapInlineMath(raw);
-      const enc = encodeURIComponent(math);
-      return `<li><span class="js-math" data-math="${escapeHtml(enc)}"></span></li>`;
-    }
-    return `<li>${escapeHtml(raw)}</li>`;
+    return `<li>${renderRichText(raw)}</li>`;
   }
 
   const left = raw.slice(0, eqIndex).trim();
   const right = raw.slice(eqIndex + 1).trim();
   const leftMath = wrapInlineMath(left);
   const leftEnc = encodeURIComponent(leftMath);
-  return `<li><span class="js-math" data-math="${escapeHtml(leftEnc)}"></span>${right ? ` = ${escapeHtml(right)}` : ""}</li>`;
+  const rightHtml = right ? renderRichText(right) : "";
+  return `<li><span class="js-math" data-math="${escapeHtml(leftEnc)}"></span>${rightHtml ? ` = ${rightHtml}` : ""}</li>`;
 }
 
 function quizPrev() {

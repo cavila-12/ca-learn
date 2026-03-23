@@ -1,5 +1,5 @@
-/* Service Worker: offline-first app shell */
-const CACHE_NAME = "cele-reviewer-cache-v13";
+﻿/* Service Worker: offline-first app shell */
+const CACHE_NAME = "cele-reviewer-cache-v14";
 const PROGRESS_CACHE = "cele-reviewer-progress";
 const PROGRESS_KEY = "./__sw_progress.json";
 
@@ -32,6 +32,7 @@ const APP_SHELL = [
   "./assets/js/core/mathjax.js",
   "./assets/js/core/page.js",
   "./assets/js/core/pwa.js",
+  "./assets/js/core/updatePrompt.js",
   "./assets/js/core/storage.js",
   "./assets/js/core/theme.js",
   "./assets/js/core/util.js",
@@ -57,9 +58,15 @@ const APP_SHELL = [
   "./data/decks/mstc-terms.csv",
   "./data/decks/psad-terms.csv",
   "./data/decks/hpge-terms.csv",
-  "./data/decks/basic-math-formula.csv",
+  "./data/decks/algebra-formula.csv",
+  "./data/decks/calculus-formula.csv",
+  "./data/decks/analytic-geometry-formula.csv",
+  "./data/decks/plane-solid-geometry-formula.csv",
+  "./data/decks/economics-formula.csv",
+  "./data/decks/fifty-challenging-probability.csv",
   "./modules/index.json",
-  "./modules/simple-curves.md"
+  "./modules/simple-curves.md",
+  "./modules/steel-design-flexural-strength.md"
 ];
 
 async function broadcastSwMessage(msg) {
@@ -191,3 +198,4 @@ self.addEventListener("fetch", (event) => {
     })()
   );
 });
+

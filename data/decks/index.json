@@ -1,40 +1,56 @@
 {
   "files": [
     {
-      "name": "Sample Deck",
-      "path": "data/decks/sample.csv"
-    },
-    {
-      "name": "PSAD Formula Deck",
+      "name": "PSAD Formula",
       "path": "data/decks/psad-formula.csv"
     },
     {
-      "name": "Surveying Formula Deck",
+      "name": "Surveying Formula",
       "path": "data/decks/surveying-formula.csv"
     },
     {
-      "name": "Transportation Engineering Formula Deck",
+      "name": "Transportation Engineering Formula",
       "path": "data/decks/transportation-formula.csv"
     },
     {
-      "name": "Basic Math Formula Deck",
-      "path": "data/decks/basic-math-formula.csv"
+      "name": "Algebra Formula",
+      "path": "data/decks/algebra-formula.csv"
     },
     {
-      "name": "HPGE Formula Deck",
+      "name": "HPGE Formula",
       "path": "data/decks/hpge-formula.csv"
     },
     {
-      "name": "MSTC Terms Deck",
+      "name": "MSTC Terms",
       "path": "data/decks/mstc-terms.csv"
     },
     {
-      "name": "HPGE Terms Deck",
+      "name": "HPGE Terms",
       "path": "data/decks/hpge-terms.csv"
     },
     {
-      "name": "PSAD Terms Deck",
+      "name": "PSAD Terms",
       "path": "data/decks/psad-terms.csv"
+    },
+    {
+      "name": "50 Challenging Probability",
+      "path": "data/decks/fifty-challenging-probability.csv"
+    },
+    {
+      "name": "Analytic Geometry Formula",
+      "path": "data/decks/analytic-geometry-formula.csv"
+    },
+    {
+      "name": "Plane & Solid Geometry Formula",
+      "path": "data/decks/plane-solid-geometry-formula.csv"
+    },
+    {
+      "name": "Calculus Formula",
+      "path": "data/decks/calculus-formula.csv"
+    },
+    {
+      "name": "Economics Formula",
+      "path": "data/decks/economics-formula.csv"
     }
   ]
 }
